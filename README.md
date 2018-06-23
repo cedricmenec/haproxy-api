@@ -1,1 +1,1 @@
-# haproxyadmin-api
+# haproxy-api
