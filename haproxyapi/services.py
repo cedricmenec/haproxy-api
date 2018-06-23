@@ -2,12 +2,12 @@
 import subprocess
 from haproxyadmin import haproxy
 from haproxyadmin import server as haproxy_server
+from config import Configuration as config
 
 from .serialization import BackendSchema, ServerSchema
 
 HAPROXY_EXE = 'haproxy'
-#HAPROXY_SOCKET_FILE = '/var/run/haproxy.sock'
-HAPROXY_SOCKET_FILE = '/var/lib/haproxy/stats'
+HAPROXY_SOCKET_FILE = config.haproxy.unix_socket
 
 SYSTEMCTL_EXE = '/bin/systemctl'
 
@@ -75,7 +75,7 @@ def status():
 
 
 def list_backends():
-    hap = haproxy.HAProxy(socket_file=HAPROXY_SOCKET_FILE)
+    hap = haproxy.HAProxy(socket_file=config.haproxy.unix_socket)
     backends = hap.backends()
     return BackendSchema().dump(backends, many=True).data
 
