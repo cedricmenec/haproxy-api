@@ -16,12 +16,17 @@ class ConfigurationLoader(object):
     def load(self, filename):
         """
         """
+
+        if not os.path.isfile(filename):
+            raise FileNotFoundError("{}".format(filename))
+
         with open(filename, 'r') as f:
             try:
                 config = yaml.load(f)
             except yaml.YAMLError as exc:
                 print(exc)
-                return ""
+                return {}
+
         return config
 
 class Configuration(object):
@@ -33,7 +38,11 @@ class Configuration(object):
     # Load configuration from YAML configuration file (config.yml)
     config_filename = os.path.join(APPLICATION_DIR, DEFAULT_CONFIG_FILENAME)
     config_loader = ConfigurationLoader()
-    external_config = config_loader.load(config_filename)
-    print(external_config)
+
+    try:
+        external_config = config_loader.load(config_filename)
+    except FileNotFoundError as err:
+        print("ERROR: Configuration file not found : {})".format(err))
+        external_config = {}
 
     haproxy = HaProxyConfiguration(external_config)
