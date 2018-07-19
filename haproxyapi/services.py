@@ -1,13 +1,20 @@
 
 import subprocess
+import os
+
 from haproxyadmin import haproxy
 from haproxyadmin import server as haproxy_server
 from config import Configuration as config
 
+from haproxyapi.haproxy.config.file import ConfigFileReader
+from haproxyapi.haproxy.config.json_converter import JsonConverter
+
 from .serialization import BackendSchema, ServerSchema
+
 
 HAPROXY_EXE = 'haproxy'
 HAPROXY_SOCKET_FILE = config.haproxy.unix_socket
+HAPROXY_CONFIG_FILE = "/etc/haproxy/haproxy.cfg"
 
 SYSTEMCTL_EXE = '/bin/systemctl'
 
@@ -111,3 +118,23 @@ def enable_server(backend_name, server_name):
 def disable_server(backend_name, server_name):
     set_server_state(backend_name, server_name, haproxy_server.STATE_DISABLE)
     return get_server(backend_name, server_name)
+
+def get_json_configuration():
+    """
+
+    Returns
+    -------
+    none
+        If file does not exist.
+
+    """
+    if format is not "json":
+        raise ValueError("Format {} is not recognized".format())
+
+    # Test if file exists
+    if not os.path.isfile(HAPROXY_CONFIG_FILE):
+        print("warning: Configuration file {} does not exists !".format(HAPROXY_CONFIG_FILE))
+        raise FileNotFoundError(HAPROXY_CONFIG_FILE)
+
+    haproxy_config = ConfigFileReader().load(HAPROXY_CONFIG_FILE)
+    return JsonConverter().dumps(haproxy_config)
