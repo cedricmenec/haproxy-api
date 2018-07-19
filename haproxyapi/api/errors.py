@@ -1,3 +1,4 @@
+import sys, traceback
 from flask import Blueprint, jsonify
 from haproxyapi.models.exceptions import HapiError
 
@@ -28,4 +29,6 @@ def handle_unexpected_error(error):
             'message': 'An unexpected error has occurred.'
         }
     }
+    # Print the traceback to the console
+    traceback.print_tb(sys.exc_info()[2])
     return jsonify(response), status_code
