@@ -95,3 +95,9 @@ def list_backends():
     """
     results = services.list_backends()
     return jsonify(results)
+
+@api.route('/config/json', methods=['GET'])
+def get_configuration():
+    """
+    """
+    return services.get_json_configuration()
