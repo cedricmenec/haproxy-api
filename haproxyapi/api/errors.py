@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from haproxyapi.models.exception import HapiError
+from haproxyapi.models.exceptions import HapiError
 
 errors = Blueprint('error', __name__)
 
