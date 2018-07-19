@@ -128,9 +128,6 @@ def get_json_configuration():
         If file does not exist.
 
     """
-    if format is not "json":
-        raise ValueError("Format {} is not recognized".format())
-
     # Test if file exists
     if not os.path.isfile(HAPROXY_CONFIG_FILE):
         print("warning: Configuration file {} does not exists !".format(HAPROXY_CONFIG_FILE))
