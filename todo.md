@@ -3,3 +3,5 @@
 - [ ] Check if Unix Socket exists before execute socket commands
 - [ ] Use Swagger definition file to define API
 - [ ] Use Zalando Connexion (https://github.com/zalando/connexion)
+- [ ] Flask Application Testing (https://github.com/pytest-dev/pytest-flask)
+
